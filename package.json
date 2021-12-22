@@ -1,0 +1,14 @@
+{
+  "name": "apple",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Blackraven93/apple.git",
+  "author": "Blackraven93 <reblackraven@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "parcel ./src/index.html"
+  },
+  "devDependencies": {
+    "sass": "^1.45.1"
+  }
+}
