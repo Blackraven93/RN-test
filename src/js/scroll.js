@@ -1,41 +1,38 @@
-function isElementInViewport (el) {
-    const rect = el.getBoundingClientRect();
-    return rect.top <= 0 && rect.bottom > document.documentElement.clientHeight;
-}
+let section = document.querySelectorAll("section");
+let menu = document.querySelectorAll("header nav a");
 
-function wheelHandler(evt){
-    
-    const containerInViewPort = Array.from(document.querySelectorAll('.sticky-container')).filter(function(container){
-        return isElementInViewport(container);
-    })[0];
+window.onscroll = () => {
+  section.forEach((i) => {
+    let top = window.scrollY;
+    let offset = i.offsetTop - 150;
+    let height = i.offsetHeight;
+    let id = i.getAttribute("id");
 
-    if(!containerInViewPort){
-        return;
+    if (top >= offset && top < offset + height) {
+      menu.forEach((link) => {
+        link.classList.remove("active");
+        document
+          .querySelector("header nav a[href*=" + id + "]")
+          .classList.add("active");
+      });
     }
+  });
+};
 
-    var isPlaceHolderBelowTop = containerInViewPort.offsetTop < document.documentElement.scrollTop;
-    var isPlaceHolderBelowBottom = containerInViewPort.offsetTop + containerInViewPort.offsetHeight > document.documentElement.scrollTop;
-    let g_canScrollHorizontally = isPlaceHolderBelowTop && isPlaceHolderBelowBottom;
+function reveal() {
+  var reveals = document.querySelectorAll(".reveal");
 
-    if(g_canScrollHorizontally){
-        containerInViewPort.querySelector('main').scrollLeft += evt.deltaY;
+  for (var i = 0; i < reveals.length; i++) {
+    var windowHeight = window.innerHeight;
+    var elementTop = reveals[i].getBoundingClientRect().top;
+    var elementVisible = 150;
+
+    if (elementTop < windowHeight - elementVisible) {
+      reveals[i].classList.add("active");
+    } else {
+      reveals[i].classList.remove("active");
     }
+  }
 }
 
-function setStickyContainersSize(){
-    document.querySelectorAll('.sticky-container').forEach(function(container){
-        const stikyContainerHeight = (container.querySelector('main').offsetWidth + window.innerHeight);
-        container.setAttribute('style', 'height: ' + stikyContainerHeight + 'px');
-    });
-}
-
-function bindEvents(){
-    window.addEventListener("wheel", wheelHandler);        
-}
-
-function init(){
-    setStickyContainersSize();
-    bindEvents();
-}
-
-init();
+window.addEventListener("scroll", reveal);
