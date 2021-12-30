@@ -1,15 +1,16 @@
-function isElementInViewport (el) {
+function isElementInViewport(el) {
     const rect = el.getBoundingClientRect();
+    console.log(rect.top <= 0 && rect.bottom > document.documentElement.clientHeight)
     return rect.top <= 0 && rect.bottom > document.documentElement.clientHeight;
 }
 
-function wheelHandler(evt){
-    
-    const containerInViewPort = Array.from(document.querySelectorAll('.sticky-container')).filter(function(container){
+function wheelHandler(evt) {
+
+    const containerInViewPort = Array.from(document.querySelectorAll('.sticky-container')).filter(function (container) {
         return isElementInViewport(container);
     })[0];
 
-    if(!containerInViewPort){
+    if (!containerInViewPort) {
         return;
     }
 
@@ -17,23 +18,23 @@ function wheelHandler(evt){
     var isPlaceHolderBelowBottom = containerInViewPort.offsetTop + containerInViewPort.offsetHeight > document.documentElement.scrollTop;
     let g_canScrollHorizontally = isPlaceHolderBelowTop && isPlaceHolderBelowBottom;
 
-    if(g_canScrollHorizontally){
+    if (g_canScrollHorizontally) {
         containerInViewPort.querySelector('main').scrollLeft += evt.deltaY;
     }
 }
 
-function setStickyContainersSize(){
-    document.querySelectorAll('.sticky-container').forEach(function(container){
+function setStickyContainersSize() {
+    document.querySelectorAll('.sticky-container').forEach(function (container) {
         const stikyContainerHeight = (container.querySelector('main').offsetWidth + window.innerHeight);
         container.setAttribute('style', 'height: ' + stikyContainerHeight + 'px');
     });
 }
 
-function bindEvents(){
-    window.addEventListener("wheel", wheelHandler);        
+function bindEvents() {
+    window.addEventListener("wheel", wheelHandler);
 }
 
-function init(){
+function init() {
     setStickyContainersSize();
     bindEvents();
 }
