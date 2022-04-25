@@ -5,6 +5,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Hello world!! I made first RN project</Text>
+      <Text style={styles.text}>It's work?</Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -16,5 +17,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  text: {
+    fontSize: 28,
+    paddingTop: 10,
   },
 });
